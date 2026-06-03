@@ -188,16 +188,114 @@ php artisan serve
 
 ---
 
-## 8. Resume Bullets
-- Designed and developed **PolyMed Engine**, an enterprise healthcare polyglot backend platform using **Java, Scala, Spring Boot, Spring MVC, Spring Security, Hibernate, Node.js, Express.js, Django, Flask, PHP, and Laravel**.
-- Implemented a custom-designed **Technology Trace telemetry console** served from the Node.js API Gateway, mapping requests dynamically across microservice boundaries.
-- Structured **Spring Security role-based access models** and HIPAA clinical data audit recording triggers in Java Spring Boot.
-- Built stateless **Scala mathematical rules engines** to evaluate clinical observations, chronic condition thresholds, and biometrics.
+## 8. API Contract & Standardized Response Design
+
+Every API endpoint across all six services follows a shared response envelope contract defined in `shared/contracts/`. This ensures that regardless of whether the response originates from Java, Python, PHP, or Scala, the client always receives a consistent structure.
+
+**Success Response Envelope:**
+```json
+{
+  "success": true,
+  "message": "Operation completed successfully",
+  "data": { },
+  "technologyTrace": { },
+  "correlationId": "corr-1780436833512-88a3d750"
+}
+```
+
+**Error Response Envelope:**
+```json
+{
+  "success": false,
+  "error": {
+    "code": "PATIENT_NOT_FOUND",
+    "message": "No patient record found for the given ID.",
+    "service": "patient-service-java-springboot",
+    "httpStatus": 404
+  },
+  "correlationId": "corr-1780436833512-88a3d750"
+}
+```
+
+All error codes are namespaced per service domain (e.g., `CLAIM_ALREADY_ADJUDICATED`, `RISK_SCORE_BELOW_THRESHOLD`, `NOTIFICATION_DELIVERY_FAILED`) so that the API Gateway can log and categorize failures before returning the response to the client.
 
 ---
 
-## 9. Interview Talking Points
-- **Trace observability**: How correlation IDs propagate from Node to Java/Python/PHP services.
-- **Resilient Fallback proxying**: Designing the API gateway client services to immediately fall back to mock JSON payload specifications if downstream services are offline, enabling mock execution instantly.
-- **Pure Functional Logic**: Why Scala was chosen for clinical scoring math to ensure side-effect-free test cases.
-- **Why no Docker/Databases?**: To demonstrate pure backend coding proficiency using raw, standard build tools and runtime configurations.
+## 9. Correlation ID Tracing & Request Lifecycle
+
+Every inbound request to the API Gateway is assigned a unique `X-Correlation-ID` header at the middleware layer before any routing occurs. This ID is injected into every downstream service call and is returned in every response envelope, making it possible to trace a single user-initiated action across all six services.
+
+```
+Client Request
+    │
+    ▼
+[Node.js API Gateway]
+    │  Middleware: Generate X-Correlation-ID = corr-{timestamp}-{random}
+    │  Middleware: Log request method, path, and correlation ID
+    │
+    ▼
+[Downstream Service: Java / Django / Flask / Laravel / Scala]
+    │  Receives X-Correlation-ID header
+    │  Includes correlationId in its response payload
+    │
+    ▼
+[API Gateway Response]
+    │  Appends technologyTrace block
+    │  Returns full standardized envelope to client
+```
+
+This design mirrors production-grade distributed tracing strategies used in healthcare platforms where audit trails and HIPAA-compliant logging require every action to be individually addressable.
+
+---
+
+## 10. Resilience & Fallback Strategy
+
+Each service proxy in the API Gateway is built with a resilient fallback mechanism. If a downstream service is offline or unreachable, the gateway does not crash or return a 500 error. Instead, it returns a pre-defined structured mock response with full technologyTrace metadata, allowing the Developer Console and API clients to continue functioning as if the real service responded.
+
+| Downstream Status | Gateway Behavior |
+| :--- | :--- |
+| Service **online** | Forwards request, returns live response |
+| Service **offline / unreachable** | Returns mock JSON payload from `shared/payloads/` with `fallback: true` flag |
+| Service returns **4xx** | Passes error through with standardized error envelope |
+| Service returns **5xx** | Logs error, returns normalized gateway error response |
+
+This approach allows the entire platform to be demonstrated end-to-end from the Developer Console even when only the Node.js API Gateway is running locally — a deliberate architectural decision to enable portfolio demos without requiring all six runtimes to be active simultaneously.
+
+---
+
+## 11. Clinical Risk Scoring Rules Engine
+
+The Scala Risk Service evaluates patient clinical risk through a stateless, composable rules pipeline. Each rule is an independent object that accepts a patient observation payload and returns a risk contribution score. Rules are combined additively, producing a final score between 0 and 100 with a labeled risk band.
+
+| Rule | Trigger Condition | Max Score Contribution |
+| :--- | :--- | :--- |
+| `ChronicConditionRule` | 2+ active chronic conditions | +25 |
+| `MedicationAdherenceRule` | Adherence rate below 70% | +20 |
+| `RecentHospitalizationRule` | Hospital admission in last 90 days | +20 |
+| `EmergencyVisitRule` | 2+ ER visits in last 12 months | +15 |
+| `CareGapRule` | Open care gaps present | +10 |
+| `AgeRiskRule` | Patient age above 65 | +10 |
+
+**Risk Band Classification:**
+
+| Score Range | Risk Band | Recommended Action |
+| :--- | :--- | :--- |
+| 0 – 24 | Low Risk | Routine annual follow-up |
+| 25 – 49 | Moderate Risk | Quarterly care manager outreach |
+| 50 – 74 | High Risk | Monthly clinical review required |
+| 75 – 100 | Critical Risk | Immediate care team escalation |
+
+---
+
+## 12. Security Model & Role-Based Access
+
+The Java Spring Boot Patient Service enforces role-based access control at the HTTP filter layer using a custom `RoleHeaderAuthenticationFilter`. The API Gateway forwards an `X-Role-Header` with every proxied request, and Spring Security validates the role before any controller method executes.
+
+| Role | Permitted Actions |
+| :--- | :--- |
+| `ROLE_ADMIN` | Create patients, assign providers, view all audit records |
+| `ROLE_CLINICIAN` | Read patient profiles, submit clinical summaries, view care gaps |
+| `ROLE_CARE_MANAGER` | Update care team assignments, trigger care gap reviews |
+| `ROLE_AUDITOR` | Read-only access to audit records and patient status history |
+
+Requests without a valid role header are rejected at the filter layer before reaching any business logic. This design models the Spring Security configuration pattern used in regulated healthcare environments where every data access event must be attributable to an authenticated, role-scoped principal.
