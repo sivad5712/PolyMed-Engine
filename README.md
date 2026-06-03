@@ -287,15 +287,30 @@ The Scala Risk Service evaluates patient clinical risk through a stateless, comp
 
 ---
 
-## 12. Security Model & Role-Based Access
+## 12. Future Enhancement Scope
 
-The Java Spring Boot Patient Service enforces role-based access control at the HTTP filter layer using a custom `RoleHeaderAuthenticationFilter`. The API Gateway forwards an `X-Role-Header` with every proxied request, and Spring Security validates the role before any controller method executes.
+PolyMed Engine is designed as a living backend platform. The following enhancements represent the next phase of the architecture, extending each service domain without changing the existing polyglot technology decisions.
 
-| Role | Permitted Actions |
-| :--- | :--- |
-| `ROLE_ADMIN` | Create patients, assign providers, view all audit records |
-| `ROLE_CLINICIAN` | Read patient profiles, submit clinical summaries, view care gaps |
-| `ROLE_CARE_MANAGER` | Update care team assignments, trigger care gap reviews |
-| `ROLE_AUDITOR` | Read-only access to audit records and patient status history |
+**API Gateway — Node.js / Express.js**
 
-Requests without a valid role header are rejected at the filter layer before reaching any business logic. This design models the Spring Security configuration pattern used in regulated healthcare environments where every data access event must be attributable to an authenticated, role-scoped principal.
+The gateway currently handles correlation ID injection and request logging per call. A planned enhancement is to introduce a persistent in-memory request audit log endpoint (`GET /api/platform/request-history`) that surfaces the last N requests with their full correlation chain, upstream service target, response status, and latency in milliseconds — giving the Developer Console a live request stream view.
+
+**Patient Service — Java / Spring Boot**
+
+The patient domain model currently manages demographics, care teams, and care gaps. The next evolution adds a `ClinicalEncounter` entity to record structured visit histories per patient, enabling the Risk Service to evaluate encounter frequency as an additional scoring dimension alongside the existing biometric and adherence rules.
+
+**Risk Scoring Service — Scala**
+
+The rules engine is currently evaluated as a single-pass additive pipeline. A planned enhancement converts the pipeline to a weighted priority chain, where critical rules (recent hospitalization, emergency visit frequency) can short-circuit evaluation and immediately classify a patient as Critical Risk without summing lower-weight rules, reducing scoring latency for high-acuity cases.
+
+**Claims Service — Django**
+
+The claims adjudication workflow currently supports three states: Submitted, Under Review, and Approved or Denied. A planned enhancement introduces an Appeal state with its own transition rules, allowing denied claims to re-enter the review pipeline with an attached clinical justification payload routed from the Patient Service.
+
+**Analytics Service — Flask**
+
+The analytics dashboard currently serves aggregated KPI snapshots. A planned enhancement adds a time-series endpoint (`GET /analytics/trend`) that accepts a `metricKey` and `windowDays` parameter, returning a structured array of daily aggregate values suitable for rendering trend charts in the Developer Console without adding any charting libraries to the backend.
+
+**Notification Service — PHP / Laravel**
+
+The notification service currently supports SMS and Email delivery channels with quiet hours enforcement. A planned enhancement adds a delivery receipt webhook model, where each outbound notification registers a callback URL and tracks whether the delivery was confirmed, bounced, or timed out — feeding back into the Analytics Service as a communication effectiveness metric.
