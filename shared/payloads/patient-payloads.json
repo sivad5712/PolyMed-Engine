@@ -1,0 +1,76 @@
+{
+  "createPatientRequest": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "dateOfBirth": "1980-05-15",
+    "gender": "Male",
+    "email": "john.doe@example.com",
+    "phone": "555-0199",
+    "address": "123 Main St, Boston, MA 02110",
+    "ssnLastFour": "1234"
+  },
+  "patientProfileResponse": {
+    "patientId": "pat-88291",
+    "firstName": "John",
+    "lastName": "Doe",
+    "dateOfBirth": "1980-05-15",
+    "gender": "Male",
+    "email": "john.doe@example.com",
+    "phone": "555-0199",
+    "address": "123 Main St, Boston, MA 02110",
+    "status": "ACTIVE",
+    "createdAt": "2026-06-02T12:00:00Z",
+    "updatedAt": "2026-06-02T12:00:00Z"
+  },
+  "memberProfileResponse": {
+    "memberId": "mem-44910",
+    "patientId": "pat-88291",
+    "insuranceProvider": "PolyShield Health",
+    "policyNumber": "POL-9910293",
+    "groupNumber": "GRP-8812",
+    "coverageEffectiveDate": "2024-01-01",
+    "coverageStatus": "ACTIVE",
+    "planType": "PPO"
+  },
+  "clinicalSummaryResponse": {
+    "patientId": "pat-88291",
+    "bloodType": "A-Positive",
+    "allergies": [
+      {
+        "allergen": "Penicillin",
+        "severity": "HIGH",
+        "reaction": "Anaphylaxis"
+      }
+    ],
+    "chronicConditions": [
+      {
+        "code": "ICD10-I10",
+        "name": "Essential Hypertension",
+        "diagnosedDate": "2021-03-12"
+      },
+      {
+        "code": "ICD10-E11",
+        "name": "Type 2 Diabetes Mellitus",
+        "diagnosedDate": "2023-08-22"
+      }
+    ],
+    "activeMedications": [
+      {
+        "name": "Lisinopril 10mg",
+        "dosage": "Once daily",
+        "prescribedDate": "2021-03-12"
+      },
+      {
+        "name": "Metformin 500mg",
+        "dosage": "Twice daily with meals",
+        "prescribedDate": "2023-08-22"
+      }
+    ],
+    "lastVitals": {
+      "bloodPressure": "135/85",
+      "heartRate": 72,
+      "temperature": 98.6,
+      "bmi": 27.4
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "exampleTechnologyTrace": {
+    "action": "SUBMIT_CLAIM",
+    "service": "Claims Workflow Service",
+    "module": "claims-service-django",
+    "technologyStack": ["Django"],
+    "businessDomain": "Healthcare Claims Workflow",
+    "whyThisStack": "Django is used to model structured healthcare claim workflows, member records, provider records, and claim review processes.",
+    "requestPath": "/api/claims",
+    "architectureRole": "Domain service responsible for healthcare claims processing."
+  }
+}

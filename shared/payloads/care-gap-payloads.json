@@ -1,0 +1,47 @@
+{
+  "openCareGapResponse": {
+    "gapId": "gap-1002",
+    "patientId": "pat-88291",
+    "measureCode": "A1C-TEST",
+    "measureName": "Annual HbA1c Diabetes Testing",
+    "status": "OPEN",
+    "dueDate": "2026-12-31",
+    "assignedProviderId": "prov-11029",
+    "notes": "Patient has type 2 diabetes and needs annual blood glucose measurement.",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  "closedCareGapResponse": {
+    "gapId": "gap-1001",
+    "patientId": "pat-88291",
+    "measureCode": "COLON-SCREEN",
+    "measureName": "Colorectal Cancer Screening",
+    "status": "CLOSED",
+    "dueDate": "2026-06-30",
+    "assignedProviderId": "prov-11029",
+    "closedDate": "2026-05-14",
+    "closureReason": "Colonoscopy performed and documented.",
+    "evidenceReference": "procedure-ref-99201",
+    "createdAt": "2026-01-01T00:00:00Z"
+  },
+  "careGapSummary": {
+    "patientId": "pat-88291",
+    "totalGaps": 2,
+    "openGaps": 1,
+    "closedGaps": 1,
+    "complianceRate": 50.0,
+    "gapsList": [
+      {
+        "gapId": "gap-1002",
+        "measureCode": "A1C-TEST",
+        "status": "OPEN",
+        "dueDate": "2026-12-31"
+      },
+      {
+        "gapId": "gap-1001",
+        "measureCode": "COLON-SCREEN",
+        "status": "CLOSED",
+        "closedDate": "2026-05-14"
+      }
+    ]
+  }
+}

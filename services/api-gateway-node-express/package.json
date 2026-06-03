@@ -1,0 +1,12 @@
+{
+  "name": "api-gateway-node-express",
+  "version": "1.0.0",
+  "description": "API Gateway for PolyMed Engine backend services",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

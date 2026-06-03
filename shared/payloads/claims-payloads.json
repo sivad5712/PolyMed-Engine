@@ -1,0 +1,54 @@
+{
+  "memberSample": {
+    "memberId": "mem-44910",
+    "firstName": "John",
+    "lastName": "Doe",
+    "dateOfBirth": "1980-05-15",
+    "policyNumber": "POL-9910293",
+    "coverageStatus": "ACTIVE"
+  },
+  "providerSample": {
+    "providerId": "prov-11029",
+    "npi": "1992837465",
+    "name": "Sarah Jenkins",
+    "specialty": "Cardiology"
+  },
+  "claimSubmission": {
+    "claimId": "clm-55902",
+    "memberId": "mem-44910",
+    "providerId": "prov-11029",
+    "dateOfService": "2026-05-10",
+    "billingCodes": [
+      {
+        "code": "CPT-99214",
+        "description": "Office outpatient visit, 30-39 minutes",
+        "charge": 150.0
+      },
+      {
+        "code": "CPT-93000",
+        "description": "Electrocardiogram, complete",
+        "charge": 75.0
+      }
+    ],
+    "totalCharged": 225.0,
+    "diagnoses": [
+      {
+        "code": "ICD10-I10",
+        "description": "Essential Hypertension"
+      }
+    ]
+  },
+  "claimStatusUpdate": {
+    "status": "APPROVED",
+    "adjudicatedAmount": 180.0,
+    "patientResponsibility": 45.0,
+    "denialReason": null,
+    "reviewerNotes": "Pre-authorization on file, CPT codes match diagnosis, approved at contract rate."
+  },
+  "careGapResponse": {
+    "gapId": "gap-1002",
+    "memberId": "mem-44910",
+    "measureCode": "A1C-TEST",
+    "status": "OPEN"
+  }
+}

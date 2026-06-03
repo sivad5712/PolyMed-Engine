@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PolyMed Engine - Developer Console</title>
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-main: #090a0f;
+      --bg-card: rgba(18, 20, 29, 0.7);
+      --bg-panel: #11131c;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-blue: #3b82f6;
+      --accent-teal: #0d9488;
+      --accent-purple: #8b5cf6;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --status-ok: #10b981;
+      --status-fail: #ef4444;
+      --font-family: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-family);
+      line-height: 1.6;
+      padding: 2.5rem;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      background: linear-gradient(135deg, #fff 30%, #93c5fd 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
+      font-weight: 500;
+    }
+
+    .platform-status-badge {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--status-ok);
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--status-ok);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--status-ok);
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(59, 130, 246, 0.3);
+      box-shadow: 0 8px 30px rgba(59, 130, 246, 0.05);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .tech-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card-description {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      min-height: 2.5rem;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 0.75rem;
+    }
+
+    .port-num {
+      color: var(--accent-blue);
+      font-family: var(--font-mono);
+    }
+
+    .service-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .status-up { color: var(--status-ok); }
+    .status-up .badge-dot { background-color: var(--status-ok); box-shadow: 0 0 6px var(--status-ok); }
+    .status-down { color: var(--text-muted); }
+    .status-down .badge-dot { background-color: #6b7280; }
+
+    /* Interactive Rules Panel */
+    .console-panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      height: fit-content;
+      position: sticky;
+      top: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+    }
+
+    input, select {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      color: var(--text-main);
+      font-family: var(--font-family);
+      font-size: 0.9rem;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .flex-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent-blue) 0%, #1d4ed8 100%);
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      margin-top: 0.5rem;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+    }
+
+    .btn-submit:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    /* Result visualizer */
+    .result-box {
+      margin-top: 1.5rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem;
+      display: none;
+    }
+
+    .result-score-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .score-badge {
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--accent-teal);
+    }
+
+    .tier-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .tier-high { background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: var(--status-fail); }
+    .tier-med { background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: #f59e0b; }
+    .tier-low { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--status-ok); }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      border-radius: 4px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .result-explanation {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 0.75rem;
+      margin-top: 0.75rem;
+    }
+
+    /* Live terminal logs */
+    .terminal-container {
+      grid-column: span 2;
+      background: #050608;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      margin-top: 2rem;
+    }
+
+    .terminal-header {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .terminal-body {
+      max-height: 250px;
+      overflow-y: auto;
+      color: #a7f3d0;
+      white-space: pre-wrap;
+    }
+
+    .json-key { color: #f472b6; }
+    .json-value { color: #34d399; }
+    .json-string { color: #60a5fa; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>PolyMed Engine</h1>
+      <div class="subtitle">Enterprise Healthcare Polyglot Backend Suite</div>
+    </div>
+    <div class="platform-status-badge">
+      <div class="status-dot"></div>
+      Gateway Port 8080 Active
+    </div>
+  </header>
+
+  <div class="grid-container">
+    
+    <!-- Left Panel: Service Cards -->
+    <div>
+      <div class="section-title">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        Ecosystem Service Registry
+      </div>
+      
+      <div class="services-grid">
+        
+        <!-- Node.js Gateway -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">API Gateway</div>
+            <div class="tech-tag" style="border-color: rgba(59, 130, 246, 0.4); color: var(--accent-blue);">Node.js</div>
+          </div>
+          <div class="card-description">Central external route entrypoint, logs requests and correlation IDs, maps validation guards.</div>
+          <div class="card-meta">
+            <span>PORT: <span class="port-num">8080</span></span>
+            <span class="service-badge status-up"><div class="badge-dot"></div>ONLINE</span>
+          </div>
+        </div>
+
+        <!-- Java Patient Service -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Patient Management</div>
+            <div class="tech-tag" style="border-color: rgba(16, 185, 129, 0.4); color: var(--status-ok);">Java / Boot</div>
+          </div>
+          <div class="card-description">Primary registry for patients, insurance members, clinical care teams, and HIPAA audits.</div>
+          <div class="card-meta">
+            <span>PORT: <span class="port-num">8081</span></span>
+            <span id="status-8081" class="service-badge status-down"><div class="badge-dot"></div>OFFLINE</span>
+          </div>
+        </div>
+
+        <!-- Scala Risk scoring -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Clinical Risk Scoring</div>
+            <div class="tech-tag" style="border-color: rgba(139, 92, 246, 0.4); color: var(--accent-purple);">Scala</div>
+          </div>
+          <div class="card-description">Stateless rules pipeline evaluating patient biometrics, conditions history, and drug adherence.</div>
+          <div class="card-meta">
+            <span>PORT: <span class="port-num">CLI Runner</span></span>
+            <span id="status-scala" class="service-badge status-up"><div class="badge-dot"></div>STANDBY</span>
+          </div>
+        </div>
+
+        <!-- Django Claims -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Claims Workflow</div>
+            <div class="tech-tag" style="border-color: rgba(245, 158, 11, 0.4); color: #f59e0b;">Django</div>
+          </div>
+          <div class="card-description">Adjudicates medical claims submission structures and logs status audit history.</div>
+          <div class="card-meta">
+            <span>PORT: <span class="port-num">8082</span></span>
+            <span id="status-8082" class="service-badge status-down"><div class="badge-dot"></div>OFFLINE</span>
+          </div>
+        </div>
+
+        <!-- Flask Analytics -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Healthcare Analytics</div>
+            <div class="tech-tag" style="border-color: rgba(6, 182, 212, 0.4); color: #06b6d4;">Flask</div>
+          </div>
+          <div class="card-description">Aggregates executive KPIs, risk distributions, and clinical care gap compliance.</div>
+          <div class="card-meta">
+            <span>PORT: <span class="port-num">8083</span></span>
+            <span id="status-8083" class="service-badge status-down"><div class="badge-dot"></div>OFFLINE</span>
+          </div>
+        </div>
+
+        <!-- Laravel Notification -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Notification Engine</div>
+            <div class="tech-tag" style="border-color: rgba(239, 68, 68, 0.4); color: var(--status-fail);">PHP / Laravel</div>
+          </div>
+          <div class="card-description">Templating registry, dispatch audits, quiet hours preferences, and SMS/Email mappings.</div>
+          <div class="card-meta">
+            <span>PORT: <span class="port-num">8084</span></span>
+            <span id="status-8084" class="service-badge status-down"><div class="badge-dot"></div>OFFLINE</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right Panel: Interactive Risk Scoring Calculator -->
+    <div class="console-panel">
+      <div class="section-title">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        Clinical Risk Evaluator Console
+      </div>
+      
+      <form id="riskForm">
+        <div class="form-group">
+          <label for="patientSelect">Select Sandbox Patient Profile</label>
+          <select id="patientSelect">
+            <option value="pat-22910">pat-22910 (John - Preventive / Healthy Profile)</option>
+            <option value="pat-55412">pat-55412 (Jane - Moderate Diabetic Profile)</option>
+            <option value="pat-88291" selected>pat-88291 (Robert - Complex Chronic Profile)</option>
+          </select>
+        </div>
+
+        <div class="flex-form-row">
+          <div class="form-group">
+            <label for="chronicCount">Chronic Conditions Count</label>
+            <input type="number" id="chronicCount" value="4" min="0">
+          </div>
+          <div class="form-group">
+            <label for="hospCount">Hospitalizations (12mo)</label>
+            <input type="number" id="hospCount" value="2" min="0">
+          </div>
+        </div>
+
+        <div class="flex-form-row">
+          <div class="form-group">
+            <label for="systolic">Systolic BP</label>
+            <input type="number" id="systolic" value="165">
+          </div>
+          <div class="form-group">
+            <label for="diastolic">Diastolic BP</label>
+            <input type="number" id="diastolic" value="102">
+          </div>
+        </div>
+
+        <div class="flex-form-row">
+          <div class="form-group">
+            <label for="bloodSugar">Fasting Blood Sugar (mg/dL)</label>
+            <input type="number" id="bloodSugar" value="180">
+          </div>
+          <div class="form-group">
+            <label for="adherence">Meds Adherence Rate (%)</label>
+            <input type="number" id="adherence" value="65" min="0" max="100">
+          </div>
+        </div>
+
+        <div class="flex-form-row">
+          <div class="form-group">
+            <label for="claimsCount">Claims Utilization (12mo)</label>
+            <input type="number" id="claimsCount" value="24" min="0">
+          </div>
+          <div class="form-group">
+            <label for="careGaps">Open Care Gaps Count</label>
+            <input type="number" id="careGaps" value="3" min="0">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Execute Risk Rules Calculations</button>
+      </form>
+
+      <!-- Rules results visualization -->
+      <div id="resultBox" class="result-box">
+        <div class="result-score-row">
+          <span class="score-badge" id="resScore">0.0</span>
+          <span class="tier-badge" id="resTier">LOW_RISK</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="resProgressBar"></div>
+        </div>
+        <div id="triggeredRules" style="font-size: 0.8rem; display: flex; flex-direction: column; gap: 0.4rem; color: var(--text-main);">
+          <!-- Triggered rules lists go here -->
+        </div>
+        <div class="result-explanation" id="resExplanation"></div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Panel: Trace API Console -->
+    <div class="terminal-container">
+      <div class="terminal-header">
+        <span>GATEWAY DISTRIBUTED LOGS & JSON ENVELOPES</span>
+        <span style="color: var(--accent-blue); font-size: 0.75rem;">HTTP STATUS 200 OK</span>
+      </div>
+      <div class="terminal-body" id="logTerminal">Initialized PolyMed Engine CLI listener console... Ready for input.</div>
+    </div>
+
+  </div>
+
+  <script>
+    // Selections profile matching
+    const profiles = {
+      "pat-22910": { chronic: 0, hosp: 0, bpSys: 118, bpDia: 78, sugar: 90, adhere: 95, claims: 2, gaps: 0 },
+      "pat-55412": { chronic: 2, hosp: 0, bpSys: 138, bpDia: 88, sugar: 115, adhere: 82, claims: 8, gaps: 1 },
+      "pat-88291": { chronic: 4, hosp: 2, bpSys: 165, bpDia: 102, sugar: 180, adhere: 65, claims: 24, gaps: 3 }
+    };
+
+    document.getElementById('patientSelect').addEventListener('change', function(e) {
+      const profile = profiles[e.target.value];
+      if (profile) {
+        document.getElementById('chronicCount').value = profile.chronic;
+        document.getElementById('hospCount').value = profile.hosp;
+        document.getElementById('systolic').value = profile.bpSys;
+        document.getElementById('diastolic').value = profile.bpDia;
+        document.getElementById('bloodSugar').value = profile.sugar;
+        document.getElementById('adherence').value = profile.adhere;
+        document.getElementById('claimsCount').value = profile.claims;
+        document.getElementById('careGaps').value = profile.gaps;
+      }
+    });
+
+    // Handle Form Calculations
+    document.getElementById('riskForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const payload = {
+        patientId: document.getElementById('patientSelect').value,
+        chronicConditionsCount: parseInt(document.getElementById('chronicCount').value),
+        recentHospitalizations: parseInt(document.getElementById('hospCount').value),
+        medicationAdherenceRate: parseFloat(document.getElementById('adherence').value) / 100,
+        claimsUtilizationCount: parseInt(document.getElementById('claimsCount').value),
+        openCareGapsCount: parseInt(document.getElementById('careGaps').value),
+        systolicBP: parseInt(document.getElementById('systolic').value),
+        diastolicBP: parseInt(document.getElementById('diastolic').value),
+        fastingBloodSugar: parseInt(document.getElementById('bloodSugar').value)
+      };
+
+      try {
+        const terminal = document.getElementById('logTerminal');
+        terminal.innerText = `[INFO] [HTTP-POST] /api/risk/score - Dispatching clinical risk payloads...\n`;
+
+        const res = await fetch('/api/risk/score', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const json = await res.json();
+
+        // Print to log terminal
+        terminal.innerHTML = `<span style="color: var(--accent-blue)">[GATEWAY LOG] POST /api/risk/score - X-Correlation-ID: ${json.correlationId}</span>\n` + 
+                             JSON.stringify(json, null, 2)
+                             .replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:')
+                             .replace(/: "([^"]+)"/g, ': <span class="json-string">"$1"</span>');
+
+        if (json.success && json.data) {
+          const data = json.data;
+          document.getElementById('resultBox').style.display = 'block';
+          
+          const score = data.calculatedScore;
+          document.getElementById('resScore').innerText = score.toFixed(1) + ' pts';
+          
+          const tier = document.getElementById('resTier');
+          tier.innerText = data.riskCategory;
+          tier.className = 'tier-badge'; // reset
+          
+          const bar = document.getElementById('resProgressBar');
+          
+          if (data.riskCategory === 'HIGH_RISK') {
+            tier.classList.add('tier-high');
+            bar.style.backgroundColor = 'var(--status-fail)';
+          } else if (data.riskCategory === 'MEDIUM_RISK') {
+            tier.classList.add('tier-med');
+            bar.style.backgroundColor = '#f59e0b';
+          } else {
+            tier.classList.add('tier-low');
+            bar.style.backgroundColor = 'var(--status-ok)';
+          }
+
+          bar.style.width = score + '%';
+          document.getElementById('resExplanation').innerText = data.explanation;
+
+          // Rules items
+          const rulesList = document.getElementById('triggeredRules');
+          rulesList.innerHTML = '';
+          data.ruleResults.forEach(r => {
+            rulesList.innerHTML += `
+              <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 0.2rem;">
+                <span style="font-weight: 600; color: var(--text-muted);">${r.ruleName}</span>
+                <span style="color: var(--accent-blue); font-weight: 700;">+${r.pointsAdded}</span>
+              </div>
+            `;
+          });
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById('logTerminal').innerText = `[ERROR] Calculation execution failed: ${err.message}`;
+      }
+    });
+
+    // Health check checker
+    async function checkHealth() {
+      try {
+        const res = await fetch('/api/platform/health');
+        if (res.ok) {
+          const json = await res.json();
+          const services = json.data.services || {};
+          
+          const updateBadge = (id, status) => {
+            const badge = document.getElementById(id);
+            if (!badge) return;
+            if (status === 'UP') {
+              badge.className = 'service-badge status-up';
+              badge.innerHTML = '<div class="badge-dot"></div>ONLINE';
+            } else {
+              badge.className = 'service-badge status-down';
+              badge.innerHTML = '<div class="badge-dot"></div>OFFLINE';
+            }
+          };
+
+          updateBadge('status-8081', services.patientService);
+          updateBadge('status-8082', services.claimsService);
+          updateBadge('status-8083', services.analyticsService);
+          updateBadge('status-8084', services.notificationService);
+        }
+      } catch (e) {
+        console.warn('Failed to fetch platform health check', e);
+      }
+    }
+
+    // Run health check on load and set intervals
+    checkHealth();
+    setInterval(checkHealth, 10000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "polymed-engine",
+  "builds": [
+    {
+      "src": "services/api-gateway-node-express/src/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "services/api-gateway-node-express/src/server.js"
+    }
+  ]
+}

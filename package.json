@@ -1,0 +1,16 @@
+{
+  "name": "polymed-engine",
+  "version": "1.0.0",
+  "description": "PolyMed Engine - Multi-microservice healthcare platform with enterprise workflow simulation",
+  "private": true,
+  "scripts": {
+    "start": "node services/api-gateway-node-express/src/server.js",
+    "dev": "node services/api-gateway-node-express/src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}

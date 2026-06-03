@@ -1,0 +1,62 @@
+[
+  {
+    "technology": "Node.js",
+    "usedIn": "API Gateway",
+    "purpose": "Runtime for central request routing and platform service catalog."
+  },
+  {
+    "technology": "Express.js",
+    "usedIn": "API Gateway",
+    "purpose": "Routing, middleware, validation, logging, and console endpoints."
+  },
+  {
+    "technology": "Java",
+    "usedIn": "Patient Management Service",
+    "purpose": "Enterprise backend language for structured healthcare workflows."
+  },
+  {
+    "technology": "Spring Boot",
+    "usedIn": "Patient Management Service",
+    "purpose": "Application framework for healthcare service APIs."
+  },
+  {
+    "technology": "Spring MVC",
+    "usedIn": "Patient Management Service",
+    "purpose": "Controller layer for patient, provider, care team, and care gap APIs."
+  },
+  {
+    "technology": "Spring Security",
+    "usedIn": "Patient Management Service",
+    "purpose": "Role-based access model for healthcare users."
+  },
+  {
+    "technology": "Hibernate",
+    "usedIn": "Patient Management Service",
+    "purpose": "Entity modeling for patient, provider, care team, and audit concepts."
+  },
+  {
+    "technology": "Scala",
+    "usedIn": "Clinical Risk Scoring Service",
+    "purpose": "Functional-style rule evaluation and clinical risk scoring."
+  },
+  {
+    "technology": "Django",
+    "usedIn": "Claims Workflow Service",
+    "purpose": "Healthcare claim workflow modeling and claim review process."
+  },
+  {
+    "technology": "Flask",
+    "usedIn": "Healthcare Analytics Service",
+    "purpose": "Lightweight healthcare KPI and analytics endpoints."
+  },
+  {
+    "technology": "PHP",
+    "usedIn": "Notification Service",
+    "purpose": "Backend language for patient and care team notification workflows."
+  },
+  {
+    "technology": "Laravel",
+    "usedIn": "Notification Service",
+    "purpose": "Notification templates, preferences, status tracking, and audit concepts."
+  }
+]

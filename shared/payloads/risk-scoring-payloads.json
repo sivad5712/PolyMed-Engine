@@ -1,0 +1,74 @@
+{
+  "lowRiskPatientInput": {
+    "patientId": "pat-22910",
+    "chronicConditionsCount": 0,
+    "recentHospitalizations": 0,
+    "medicationAdherenceRate": 0.95,
+    "claimsUtilizationCount": 2,
+    "openCareGapsCount": 0,
+    "systolicBP": 118,
+    "diastolicBP": 78,
+    "fastingBloodSugar": 90
+  },
+  "mediumRiskPatientInput": {
+    "patientId": "pat-55412",
+    "chronicConditionsCount": 2,
+    "recentHospitalizations": 0,
+    "medicationAdherenceRate": 0.82,
+    "claimsUtilizationCount": 8,
+    "openCareGapsCount": 1,
+    "systolicBP": 138,
+    "diastolicBP": 88,
+    "fastingBloodSugar": 115
+  },
+  "highRiskPatientInput": {
+    "patientId": "pat-88291",
+    "chronicConditionsCount": 4,
+    "recentHospitalizations": 2,
+    "medicationAdherenceRate": 0.65,
+    "claimsUtilizationCount": 24,
+    "openCareGapsCount": 3,
+    "systolicBP": 165,
+    "diastolicBP": 102,
+    "fastingBloodSugar": 180
+  },
+  "riskDecisionResponse": {
+    "patientId": "pat-88291",
+    "calculatedScore": 85.5,
+    "riskCategory": "HIGH_RISK",
+    "evaluationTimestamp": "2026-06-02T17:37:55Z",
+    "ruleResults": [
+      {
+        "ruleName": "CHRONIC_CONDITION_COUNT_RULE",
+        "pointsAdded": 20.0,
+        "message": "Patient has 4 chronic conditions (threshold: 3+ add 20 points)"
+      },
+      {
+        "ruleName": "RECENT_HOSPITALIZATION_RULE",
+        "pointsAdded": 30.0,
+        "message": "Patient has 2 hospitalizations within the last 12 months (threshold: 1+ add 15 points per hospitalization, max 30)"
+      },
+      {
+        "ruleName": "MEDICATION_ADHERENCE_RULE",
+        "pointsAdded": 15.0,
+        "message": "Medication adherence is 65% which is below the 80% compliance threshold (add 15 points)"
+      },
+      {
+        "ruleName": "CLAIMS_UTILIZATION_RULE",
+        "pointsAdded": 10.0,
+        "message": "High claims utilization of 24 (threshold: 20+ add 10 points)"
+      },
+      {
+        "ruleName": "OPEN_CARE_GAP_RULE",
+        "pointsAdded": 5.0,
+        "message": "Patient has 3 open care gaps (add 5 points for any open care gaps)"
+      },
+      {
+        "ruleName": "ABNORMAL_OBSERVATION_RULE",
+        "pointsAdded": 5.5,
+        "message": "Elevated blood pressure (165/102) and fasting blood sugar (180 mg/dL)"
+      }
+    ],
+    "explanation": "Critical clinical status: Multiple chronic conditions, recent hospitalizations, poor medication adherence, and uncontrolled vitals place this patient in the High Risk tier, requiring immediate Care Management intervention."
+  }
+}

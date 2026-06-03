@@ -1,0 +1,19 @@
+{
+  "assignCareTeamRequest": {
+    "patientId": "pat-88291",
+    "providerIds": ["prov-11029", "prov-33410"],
+    "assignedRole": "PRIMARY_CARE",
+    "startDate": "2026-06-02"
+  },
+  "careTeamResponse": {
+    "careTeamId": 1,
+    "patientId": "pat-88291",
+    "providerIds": ["prov-11029", "prov-33410"],
+    "assignedRole": "PRIMARY_CARE",
+    "startDate": "2026-06-02",
+    "status": "ACTIVE"
+  },
+  "updateCareTeamStatusRequest": {
+    "status": "INACTIVE"
+  }
+}

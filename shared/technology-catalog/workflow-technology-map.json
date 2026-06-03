@@ -1,0 +1,29 @@
+{
+  "workflows": [
+    {
+      "name": "Patient Onboarding Workflow",
+      "steps": [
+        { "step": 1, "service": "API Gateway", "technology": "Express.js", "description": "Intercepts onboarding POST request, validates payload fields, and assigns correlation ID." },
+        { "step": 2, "service": "Patient Service", "technology": "Spring Security", "description": "Ensures requesting user has ADMIN privileges." },
+        { "step": 3, "service": "Patient Service", "technology": "Hibernate", "description": "Persists Patient and MemberProfile entities." },
+        { "step": 4, "service": "Patient Service", "technology": "Spring MVC", "description": "Returns success envelope containing technology trace." }
+      ]
+    },
+    {
+      "name": "Clinical Risk Scoring Workflow",
+      "steps": [
+        { "step": 1, "service": "API Gateway", "technology": "Express.js", "description": "Receives patient biometrics and forwards to Scala engine." },
+        { "step": 2, "service": "Risk Service", "technology": "Scala Rules Engine", "description": "Applies chronic condition count, BP, blood sugar, and adherence rules functionally." },
+        { "step": 3, "service": "Risk Service", "technology": "Scala Pattern Matching", "description": "Translates numeric scores (0-100) to LOW, MEDIUM, or HIGH risk categories." }
+      ]
+    },
+    {
+      "name": "Claim Submission & Adjudication",
+      "steps": [
+        { "step": 1, "service": "API Gateway", "technology": "Express.js", "description": "Validates CPT code parameters and routes to Django." },
+        { "step": 2, "service": "Claims Service", "technology": "Django ORM", "description": "Creates Claim and Diagnosis records linked to Member database." },
+        { "step": 3, "service": "Claims Service", "technology": "Django Views", "description": "Enforces state transition rules and updates claim status." }
+      ]
+    }
+  ]
+}

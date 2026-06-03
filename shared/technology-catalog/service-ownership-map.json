@@ -1,0 +1,64 @@
+{
+  "services": [
+    {
+      "service": "Node.js Express API Gateway",
+      "folder": "services/api-gateway-node-express",
+      "technologyStack": ["Node.js", "Express.js"],
+      "businessDomain": "Platform Routing & Visibility",
+      "responsibilities": [
+        "Dynamic proxy routing and verification fallback.",
+        "Correlation ID tracing injection and log reporting.",
+        "Serving HTML Developer Console at /console."
+      ]
+    },
+    {
+      "service": "Java Spring Boot Patient Management Service",
+      "folder": "services/patient-service-java-springboot",
+      "technologyStack": ["Java", "Spring Boot", "Spring MVC", "Spring Security", "Hibernate"],
+      "businessDomain": "Patient and Member Management",
+      "responsibilities": [
+        "Patient registration and demographic profile lookups.",
+        "Provider specialties registration and search registries.",
+        "Spring Security role checking and HIPAA clinical access logging."
+      ]
+    },
+    {
+      "service": "Scala Clinical Risk Scoring Service",
+      "folder": "services/risk-scoring-service-scala",
+      "technologyStack": ["Scala"],
+      "businessDomain": "Clinical Risk Scoring",
+      "responsibilities": [
+        "Stateless mathematical risk scoring mathematical logic.",
+        "Pattern matched clinical rule evaluation trees."
+      ]
+    },
+    {
+      "service": "Django Claims Workflow Service",
+      "folder": "services/claims-service-django",
+      "technologyStack": ["Django"],
+      "businessDomain": "Claims Workflow",
+      "responsibilities": [
+        "Claims submissions and clinical code relationships.",
+        "Adjudication state transitions (Approve/Deny/Review)."
+      ]
+    },
+    {
+      "service": "Flask Healthcare Analytics Service",
+      "folder": "services/analytics-service-flask",
+      "technologyStack": ["Flask"],
+      "businessDomain": "Healthcare Analytics",
+      "responsibilities": [
+        "Reporting KPIs, average risk distributions, and workloads."
+      ]
+    },
+    {
+      "service": "PHP Laravel Notification Service",
+      "folder": "services/notification-service-laravel",
+      "technologyStack": ["PHP", "Laravel"],
+      "businessDomain": "Notifications & Preferences",
+      "responsibilities": [
+        "Notification templates interpolation, SMS/Email preferences."
+      ]
+    }
+  ]
+}

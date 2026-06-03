@@ -1,0 +1,44 @@
+{
+  "patientNotification": {
+    "notificationId": "notif-00981",
+    "patientId": "pat-88291",
+    "type": "EMAIL",
+    "templateCode": "CARE_GAP_OPEN",
+    "recipient": "john.doe@example.com",
+    "subject": "Action Required: Outstanding Preventive Health Check",
+    "body": "Dear John, our records show that your Annual HbA1c Diabetes Testing (A1C-TEST) is outstanding. Please contact Dr. Sarah Jenkins to schedule an appointment.",
+    "status": "SENT",
+    "sentAt": "2026-06-02T15:30:00Z"
+  },
+  "careTeamNotification": {
+    "notificationId": "notif-00982",
+    "patientId": "pat-88291",
+    "type": "PORTAL_ALERT",
+    "templateCode": "HIGH_RISK_ALERT",
+    "recipient": "prov-11029",
+    "subject": "URGENT: Patient Risk Score Escalated",
+    "body": "Alert: Patient John Doe (pat-88291) has been evaluated as HIGH_RISK (Score: 85.5). Major factors: recent hospitalizations and abnormal vitals. Immediate outreach is recommended.",
+    "status": "DELIVERED",
+    "sentAt": "2026-06-02T17:37:55Z"
+  },
+  "appointmentReminder": {
+    "notificationId": "notif-00983",
+    "patientId": "pat-88291",
+    "type": "SMS",
+    "templateCode": "APP_REMINDER",
+    "recipient": "555-0199",
+    "subject": "Appointment Reminder",
+    "body": "Hi John, this is a reminder of your appointment with Dr. Sarah Jenkins on 2026-06-15 at 10:00 AM. Reply YES to confirm or call 555-0322 to reschedule.",
+    "status": "PENDING",
+    "sentAt": null
+  },
+  "notificationPreference": {
+    "patientId": "pat-88291",
+    "receiveEmail": true,
+    "receiveSMS": true,
+    "receivePortalAlerts": true,
+    "preferredChannels": ["EMAIL", "SMS"],
+    "quietHoursStart": "22:00",
+    "quietHoursEnd": "08:00"
+  }
+}

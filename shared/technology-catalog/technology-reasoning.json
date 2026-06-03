@@ -1,0 +1,16 @@
+{
+  "reasonings": {
+    "Node.js": "Chosen for low-overhead HTTP proxying and non-blocking I/O event processing.",
+    "Express.js": "Provides rapid routing, middleware stacking, and simple static serving without complex setup.",
+    "Java": "Industry standard for transaction-heavy, strictly-typed enterprise core healthcare software.",
+    "Spring Boot": "Offers standardized dependency injection, configuration bootstrap, and enterprise production readiness.",
+    "Spring MVC": "Provides clean model-view-controller separation with declarative request maps.",
+    "Spring Security": "Robust built-in security architecture matching standard medical access controls.",
+    "Hibernate": "Relational entity mapping ensuring strict entity lifecycles, and relational maps.",
+    "Scala": "Ensures risk calculation rules are mathematical, testable, stateless, and free of side-effects.",
+    "Django": "Includes batteries-included admin screens and direct model routing for claim adjudication state-machines.",
+    "Flask": "Lightweight python framework ideal for rapid KPI reporting without massive boilerplate.",
+    "PHP": "Fast deployment, mature execution, and deep support for script interpolation.",
+    "Laravel": "Includes robust template engines and preference drivers for multi-channel notification dispatches."
+  }
+}

@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+define('LARAVEL_START', microtime(true));
+
+// Mock Artisan entrypoint for PolyMed Engine
+echo "=============================================================\n";
+echo "  PolyMed Engine - Notification Service (PHP Laravel Artisan)\n";
+echo "=============================================================\n";
+echo "Ready to run commands (e.g. php artisan serve)\n\n";
+
+if ($argc > 1 && $argv[1] == 'serve') {
+    $port = 8084;
+    for ($i = 1; $i < $argc; $i++) {
+        if (str_starts_with($argv[$i], '--port=')) {
+            $port = (int) substr($argv[$i], 7);
+        }
+    }
+    echo "Starting Laravel development server on port $port...\n";
+    echo "Open: http://localhost:$port/api/health\n";
+    
+    // Command mapping for simple PHP server
+    passthru("PHP_CLI_SERVER_WORKERS=4 php -S localhost:$port routes/api.php");
+} else {
+    echo "Usage: php artisan serve [--port=8084]\n";
+}

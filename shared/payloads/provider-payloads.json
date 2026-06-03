@@ -1,0 +1,29 @@
+{
+  "createProviderRequest": {
+    "npi": "1992837465",
+    "firstName": "Sarah",
+    "lastName": "Jenkins",
+    "specialty": "Cardiology",
+    "email": "sarah.jenkins@polymed.org",
+    "phone": "555-0322",
+    "facility": "Boston Medical Center"
+  },
+  "providerProfileResponse": {
+    "providerId": "prov-11029",
+    "npi": "1992837465",
+    "firstName": "Sarah",
+    "lastName": "Jenkins",
+    "specialty": "Cardiology",
+    "email": "sarah.jenkins@polymed.org",
+    "phone": "555-0322",
+    "facility": "Boston Medical Center",
+    "status": "ACTIVE",
+    "createdAt": "2026-06-02T12:00:00Z"
+  },
+  "careTeamAssignmentRequest": {
+    "patientId": "pat-88291",
+    "providerIds": ["prov-11029", "prov-33410"],
+    "assignedRole": "PRIMARY_CARE",
+    "startDate": "2026-06-02"
+  }
+}
