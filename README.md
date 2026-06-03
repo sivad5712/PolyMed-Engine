@@ -1,5 +1,19 @@
 # PolyMed Engine
 
+<div align="center">
+
+## 🚀 Live Demo
+
+### [![Live Demo](https://img.shields.io/badge/🌐%20Live%20Demo-polymed--engine.vercel.app-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://polymed-engine.vercel.app/console)
+
+**[👉 Click here to open the Developer Console →](https://polymed-engine.vercel.app/console)**
+
+> Hosted on Vercel — no setup needed. Open the link and explore the live Healthcare Workflow Simulator.
+
+</div>
+
+---
+
 [![Java](https://img.shields.io/badge/Java-17-blue.svg)](https://www.oracle.com/java/)
 [![Scala](https://img.shields.io/badge/Scala-2.13-red.svg)](https://www.scala-lang.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-green.svg)](https://spring.io/projects/spring-boot)
