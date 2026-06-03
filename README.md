@@ -2,13 +2,9 @@
 
 <div align="center">
 
-## 🚀 Live Demo
+## Live Demo
 
-### [![Live Demo](https://img.shields.io/badge/🌐%20Live%20Demo-polymed--engine.vercel.app-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://polymed-engine.vercel.app/console)
-
-**[👉 Click here to open the Developer Console →](https://polymed-engine.vercel.app/console)**
-
-> Hosted on Vercel — no setup needed. Open the link and explore the live Healthcare Workflow Simulator.
+**[Click here to open the Developer Console ](https://polymed-engine.vercel.app/console)**
 
 </div>
 
@@ -28,9 +24,6 @@
 
 PolyMed Engine is an enterprise-grade backend microservice suite designed to simulate a real-world healthcare command center. It owns core healthcare business domains (Patient profiles, claims adjudication, clinical risk rules, notifications, analytics) and visibly exposes its polyglot technology stack in real-time.
 
-> [!IMPORTANT]
-> **Strict Technology Alignment:**
-> PolyMed Engine intentionally uses only the technologies listed in the backend stack (Java, Scala, Spring Boot, Spring MVC, Spring Security, Hibernate, Node.js, Express.js, Django, Flask, PHP, and Laravel) and avoids adding databases, cloud tools, containers, message brokers, or unrelated frameworks so the repository stays focused and resume-aligned.
 
 ---
 
